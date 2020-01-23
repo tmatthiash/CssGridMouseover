@@ -37,6 +37,23 @@ export class Grid extends Component {
         };
         this.updateStyleSheet = this.updateStyleSheet.bind(this);
     }
+
+    componentDidMount() {
+        let bigBigArray = [];
+        let i;
+        for (i = 0; i < 100; i++) {
+            let cellValues = [];
+            let j;
+            for (j = 0; j < 100; j++) {
+                cellValues.push(Math.floor(Math.random() * 100))
+            }
+            bigBigArray.push({cellValues: cellValues});
+        }
+        this.setState({
+            rows: bigBigArray
+        })
+    }
+
     updateStyleSheet(cellValue) {
         const { previousMouseOver } = this.state;
         console.log(cellValue)
@@ -47,7 +64,7 @@ export class Grid extends Component {
         }
         if (previousMouseOver && (previousMouseOver !== cellValue)) {
             const oldElements = document.getElementsByClassName(`single-cell-${previousMouseOver}`)
-            for (i = 0; i < newElements.length; i++) {
+            for (i = 0; i < oldElements.length; i++) {
                 oldElements[i].style.backgroundColor = "blue";
             }
         }

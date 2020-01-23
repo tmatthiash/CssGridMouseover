@@ -20,7 +20,7 @@ export class Cell extends Component {
     render() {
         const { cellValue } = this.props;
         return (
-            <div onMouseEnter={this.mouseEnter} ref={this.cellRef} style={{ width: "50px", height: "50px", backgroundColor: "blue" }} >{cellValue}</div>
+            <div onMouseEnter={this.mouseEnter} ref={this.cellRef} style={{ fontSize: "14px", width: "15px", height: "15px", backgroundColor: "blue" }} >{cellValue}</div>
         )
     }
 }
