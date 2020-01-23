@@ -5,65 +5,48 @@ export class Grid extends Component {
     constructor() {
         super();
         this.state = {
-            rows: [
-                {
-                    cellValues: [
-                        1, 2, 3, 4, 5
-                    ]
-                },
-                {
-                    cellValues: [
-                        4, 5, 1, 3, 2
-                    ]
-                },
-                {
-                    cellValues: [
-                        2, 4, 3, 1, 5
-                    ]
-                },
-                {
-                    cellValues: [
-                        4, 2, 3, 1, 5
-                    ]
-                },
-                {
-                    cellValues: [
-                        5, 2, 3, 4, 1
-                    ]
-                }
-
-            ],
+            cellMap: [],
             previousMouseOver: null
         };
         this.updateStyleSheet = this.updateStyleSheet.bind(this);
     }
 
     componentDidMount() {
-        let bigBigArray = [];
+
+        const { bigBigArray } = this.props;
         let i;
-        for (i = 0; i < 100; i++) {
-            let cellValues = [];
-            let j;
-            for (j = 0; j < 100; j++) {
-                cellValues.push(Math.floor(Math.random() * 500))
-            }
-            bigBigArray.push({cellValues: cellValues});
+        // CellMap Area
+        let uniqueCellList
+        if (bigBigArray.length > 0) {
+            uniqueCellList = bigBigArray.reduce((accumulator, currentValue) => {
+                return [...accumulator, ...currentValue.cellValues]
+            }, [])
+        }
+        uniqueCellList = [...new Set(uniqueCellList)];
+
+        let tempCellMap = [];
+        for (i = 0; i < uniqueCellList.length; i++) {
+            tempCellMap[i] = { elements: document.getElementsByClassName(`single-cell-${i}`) }
+            const tempGuy = document.getElementsByClassName(`single-cell-${i}`)
         }
         this.setState({
-            rows: bigBigArray
+            cellMap: tempCellMap
         })
     }
 
+
     updateStyleSheet(cellValue) {
-        const { previousMouseOver } = this.state;
-        console.log(cellValue)
+
+        const startTimer = new Date();
+
+        const { previousMouseOver, cellMap } = this.state;
         let i;
-        const newElements = document.getElementsByClassName(`single-cell-${cellValue}`)
+        const newElements = cellMap[cellValue].elements
         for (i = 0; i < newElements.length; i++) {
             newElements[i].style.backgroundColor = "red";
         }
         if (previousMouseOver && (previousMouseOver !== cellValue)) {
-            const oldElements = document.getElementsByClassName(`single-cell-${previousMouseOver}`)
+            const oldElements = cellMap[previousMouseOver].elements
             for (i = 0; i < oldElements.length; i++) {
                 oldElements[i].style.backgroundColor = "blue";
             }
@@ -71,13 +54,33 @@ export class Grid extends Component {
         this.setState({
             previousMouseOver: cellValue
         })
+        console.log("Time Diff:", (new Date - startTimer), "ms")
     }
 
+    // updateStyleSheet(cellValue) {
+    //     const { previousMouseOver } = this.state;
+    //     console.log(cellValue)
+    //     let i;
+    //     const newElements = document.getElementsByClassName(`single-cell-${cellValue}`)
+    //     for (i = 0; i < newElements.length; i++) {
+    //         newElements[i].style.backgroundColor = "red";
+    //     }
+    //     if (previousMouseOver && (previousMouseOver !== cellValue)) {
+    //         const oldElements = document.getElementsByClassName(`single-cell-${previousMouseOver}`)
+    //         for (i = 0; i < oldElements.length; i++) {
+    //             oldElements[i].style.backgroundColor = "blue";
+    //         }
+    //     }
+    //     this.setState({
+    //         previousMouseOver: cellValue
+    //     })
+    // }
+
     render() {
-        const { rows } = this.state;
+        const { bigBigArray } = this.props;
         return (
             <div style={{ display: "flex" }}>
-                {rows.map((rowValue, index) =>
+                {bigBigArray.map((rowValue, index) =>
                     <GridRow key={index} changeStyles={this.updateStyleSheet} cellValues={rowValue.cellValues} />
                 )}
             </div>
