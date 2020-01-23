@@ -45,7 +45,7 @@ export class Grid extends Component {
             let cellValues = [];
             let j;
             for (j = 0; j < 100; j++) {
-                cellValues.push(Math.floor(Math.random() * 100))
+                cellValues.push(Math.floor(Math.random() * 500))
             }
             bigBigArray.push({cellValues: cellValues});
         }
