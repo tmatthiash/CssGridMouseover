@@ -8,19 +8,30 @@ export class Grid extends Component {
             rows: [
                 {
                     cellValues: [
-                        1, 2, 3
+                        1, 2, 3, 4, 5
                     ]
                 },
                 {
                     cellValues: [
-                        1, 3, 2
+                        4, 5, 1, 3, 2
                     ]
                 },
                 {
                     cellValues: [
-                        2, 3, 1
+                        2, 4, 3, 1, 5
+                    ]
+                },
+                {
+                    cellValues: [
+                        4, 2, 3, 1, 5
+                    ]
+                },
+                {
+                    cellValues: [
+                        5, 2, 3, 4, 1
                     ]
                 }
+
             ],
             previousMouseOver: null
         };
