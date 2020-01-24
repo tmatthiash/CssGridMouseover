@@ -4,34 +4,7 @@ import GridRow from './GridRow'
 export class Grid extends Component {
     constructor() {
         super();
-        this.state = {
-            cellMap: [],
-            previousMouseOver: null
-        };
         this.updateStyleSheet = this.updateStyleSheet.bind(this);
-    }
-
-    componentDidMount() {
-
-        const { bigBigArray } = this.props;
-        let i;
-        // CellMap Area
-        let uniqueCellList
-        if (bigBigArray.length > 0) {
-            uniqueCellList = bigBigArray.reduce((accumulator, currentValue) => {
-                return [...accumulator, ...currentValue.cellValues]
-            }, [])
-        }
-        uniqueCellList = [...new Set(uniqueCellList)];
-
-        let tempCellMap = [];
-        for (i = 0; i < uniqueCellList.length; i++) {
-            tempCellMap[i] = { elements: document.getElementsByClassName(`single-cell-${i}`) }
-            const tempGuy = document.getElementsByClassName(`single-cell-${i}`)
-        }
-        this.setState({
-            cellMap: tempCellMap
-        })
     }
 
 
@@ -39,23 +12,43 @@ export class Grid extends Component {
 
         const startTimer = new Date();
 
-        const { previousMouseOver, cellMap } = this.state;
+        const sheet = document.styleSheets[0];
         let i;
-        const newElements = cellMap[cellValue].elements
-        for (i = 0; i < newElements.length; i++) {
-            newElements[i].style.backgroundColor = "red";
-        }
-        if (previousMouseOver && (previousMouseOver !== cellValue)) {
-            const oldElements = cellMap[previousMouseOver].elements
-            for (i = 0; i < oldElements.length; i++) {
-                oldElements[i].style.backgroundColor = "blue";
+        for(i=0; i<sheet.rules.length; i++){
+            if(sheet.rules[i].cssText.includes('single-cell')){
+                sheet.deleteRule(i);
             }
         }
-        this.setState({
-            previousMouseOver: cellValue
-        })
+        if (sheet.rules[sheet.rules.length]) {
+            debugger;
+            sheet.deleteRule(3);
+        }
+        sheet.insertRule(`.single-cell-${cellValue} { background-color: red !important}`, sheet.rules.length);
         console.log("Time Diff:", (new Date - startTimer), "ms")
+        const sheetTest = sheet;
     }
+
+    // updateStyleSheet(cellValue) {
+
+    //     const startTimer = new Date();
+
+    //     const { previousMouseOver, cellMap } = this.state;
+    //     let i;
+    //     const newElements = cellMap[cellValue].elements
+    //     for (i = 0; i < newElements.length; i++) {
+    //         newElements[i].style.backgroundColor = "red";
+    //     }
+    //     if (previousMouseOver && (previousMouseOver !== cellValue)) {
+    //         const oldElements = cellMap[previousMouseOver].elements
+    //         for (i = 0; i < oldElements.length; i++) {
+    //             oldElements[i].style.backgroundColor = "blue";
+    //         }
+    //     }
+    //     this.setState({
+    //         previousMouseOver: cellValue
+    //     })
+    //     console.log("Time Diff:", (new Date - startTimer), "ms")
+    // }
 
     // updateStyleSheet(cellValue) {
     //     const { previousMouseOver } = this.state;
@@ -79,7 +72,7 @@ export class Grid extends Component {
     render() {
         const { bigBigArray } = this.props;
         return (
-            <div style={{ display: "flex" }}>
+            <div id="main-grid" style={{ display: "flex" }}>
                 {bigBigArray.map((rowValue, index) =>
                     <GridRow key={index} changeStyles={this.updateStyleSheet} cellValues={rowValue.cellValues} />
                 )}

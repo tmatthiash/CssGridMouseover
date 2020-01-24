@@ -8,10 +8,10 @@ import Grid from './Grid'
 function App() {
   let bigBigArray = [];
   let i;
-  for (i = 0; i < 100; i++) {
+  for (i = 0; i < 200; i++) {
     let cellValues = [];
     let j;
-    for (j = 0; j < 100; j++) {
+    for (j = 0; j < 200; j++) {
       cellValues.push(Math.floor(Math.random() * 500))
     }
     bigBigArray.push({ cellValues: cellValues });
