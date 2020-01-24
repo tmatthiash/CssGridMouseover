@@ -3,12 +3,8 @@ import React, { Component } from 'react';
 export class Cell extends Component {
     constructor() {
         super();
-        this.state = {
-            timeoutID: null
-        }
         this.cellRef = React.createRef()
         this.mouseEnter = this.mouseEnter.bind(this);
-        // this.mouseLeave = this.mouseLeave.bind(this);
     }
 
     componentDidMount() {
@@ -18,22 +14,8 @@ export class Cell extends Component {
 
     mouseEnter(){
         const { cellValue, changeStyles } = this.props;
-
         changeStyles(cellValue) 
     }
-
-    // mouseEnter() {
-    //     const { cellValue, changeStyles } = this.props;
-    //     const timeoutID = setTimeout(() => { changeStyles(cellValue) }, 200);
-    //     this.setState({
-    //         timeoutID
-    //     })
-    // }
-    // mouseLeave() {
-    //     const { timeoutID } = this.state;
-    //     clearTimeout(timeoutID)
-    // }
-
 
     render() {
         const { cellValue } = this.props;

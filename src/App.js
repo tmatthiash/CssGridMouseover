@@ -1,11 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Grid from './Grid'
 
 
 
 function App() {
+
+  // Generate big pile of data to make a grid out of
   let bigBigArray = [];
   let i;
   for (i = 0; i < 200; i++) {
@@ -20,17 +21,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Grid bigBigArray={bigBigArray} />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );

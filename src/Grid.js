@@ -9,7 +9,6 @@ export class Grid extends Component {
 
 
     updateStyleSheet(cellValue) {
-
         const startTimer = new Date();
 
         const sheet = document.styleSheets[0];
@@ -19,55 +18,11 @@ export class Grid extends Component {
                 sheet.deleteRule(i);
             }
         }
-        if (sheet.rules[sheet.rules.length]) {
-            debugger;
-            sheet.deleteRule(3);
-        }
+        // No judging for !important for a proof of concept
         sheet.insertRule(`.single-cell-${cellValue} { background-color: red !important}`, sheet.rules.length);
         console.log("Time Diff:", (new Date - startTimer), "ms")
         const sheetTest = sheet;
     }
-
-    // updateStyleSheet(cellValue) {
-
-    //     const startTimer = new Date();
-
-    //     const { previousMouseOver, cellMap } = this.state;
-    //     let i;
-    //     const newElements = cellMap[cellValue].elements
-    //     for (i = 0; i < newElements.length; i++) {
-    //         newElements[i].style.backgroundColor = "red";
-    //     }
-    //     if (previousMouseOver && (previousMouseOver !== cellValue)) {
-    //         const oldElements = cellMap[previousMouseOver].elements
-    //         for (i = 0; i < oldElements.length; i++) {
-    //             oldElements[i].style.backgroundColor = "blue";
-    //         }
-    //     }
-    //     this.setState({
-    //         previousMouseOver: cellValue
-    //     })
-    //     console.log("Time Diff:", (new Date - startTimer), "ms")
-    // }
-
-    // updateStyleSheet(cellValue) {
-    //     const { previousMouseOver } = this.state;
-    //     console.log(cellValue)
-    //     let i;
-    //     const newElements = document.getElementsByClassName(`single-cell-${cellValue}`)
-    //     for (i = 0; i < newElements.length; i++) {
-    //         newElements[i].style.backgroundColor = "red";
-    //     }
-    //     if (previousMouseOver && (previousMouseOver !== cellValue)) {
-    //         const oldElements = document.getElementsByClassName(`single-cell-${previousMouseOver}`)
-    //         for (i = 0; i < oldElements.length; i++) {
-    //             oldElements[i].style.backgroundColor = "blue";
-    //         }
-    //     }
-    //     this.setState({
-    //         previousMouseOver: cellValue
-    //     })
-    // }
 
     render() {
         const { bigBigArray } = this.props;
